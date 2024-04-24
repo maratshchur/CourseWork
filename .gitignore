@@ -1,0 +1,9 @@
+navec_hudlit_v1_12B_500K_300d_100q.tar
+noun_only_model.txt
+model.txt
+dict.txt
+all_word.txt
+migrations
+.vscode
+__pycache__
+db.sqlite3
