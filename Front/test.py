@@ -1,57 +1,57 @@
+from PySide6.QtWidgets import QApplication, QDialog, QLineEdit,  QLabel, QPushButton, QVBoxLayout, QWidget, QMessageBox
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QWidget
+import requests
+import json
+from email_verification import VerifyEmailPage
+from urls import BASE_URL
+from UI.ui_register_dialog import Ui_Dialog
 
-
-class MainPage(QWidget):
+class RegisterDialog(QDialog, Ui_Dialog):
     def __init__(self):
-        super().__init__()
+        super(RegisterDialog, self).__init__()
+        self.setupUi(self)
+        self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
+        self.confirm_password_input.setEchoMode(QLineEdit.EchoMode.Password)
+        self.register_button.clicked.connect(self.register)
+        self.setModal(True)
 
-        layout = QVBoxLayout()
-        self.setLayout(layout)
+    def register(self):
+        email = self.email_input.text()
+        username = self.username_input.text()
+        password = self.password_input.text()
+        confirm_password = self.confirm_password_input.text()
 
-        label = QLabel('Главная страница', self)
-        layout.addWidget(label)
+        # Client-side validation
+        if not email or not username or not password or not confirm_password:
+            QMessageBox.critical(self, "Registration Error", "Please fill in all fields")
+            return
 
-        button = QPushButton('Перейти на другую страницу', self)
-        button.clicked.connect(self.go_to_other_page)
-        layout.addWidget(button)
+        if password!= confirm_password:
+            QMessageBox.critical(self, "Registration Error", "Passwords do not match")
+            return
 
-    def go_to_other_page(self):
-        other_page = OtherPage()
-        self.parent().setCentralWidget(other_page)
+        response = requests.post(f'{BASE_URL}/register', data={'email': email, 'username': username, 'password1': password, 'password2': confirm_password})
 
+        if response.status_code == 200:
+            self.verify_email_page = VerifyEmailPage(email, username)
+            self.verify_email_page.show()
+            self.close()
+        else:
+            response_data = response.json().get('errors', 'Unknown error')
+            response_data = json.loads(response_data)
+            if response_data.get('email'):
+                error_message = response_data['email'][0]['message']
+            elif response_data.get('username'):
+                error_message = response_data['username'][0]['message']
+            elif response_data.get('password1'):
+                error_message = response_data['password1'][0]['message']
+            elif response_data.get('password2'):
+                error_message = response_data['password2'][0]['message']
+            QMessageBox.critical(self, "Registration Error", error_message)
 
-class OtherPage(QWidget):
-    def __init__(self):
-        super().__init__()
-
-        layout = QVBoxLayout()
-        self.setLayout(layout)
-
-        label = QLabel('Другая страница', self)
-        layout.addWidget(label)
-
-        button = QPushButton('Вернуться на главную страницу', self)
-        button.clicked.connect(self.go_to_main_page)
-        layout.addWidget(button)
-
-    def go_to_main_page(self):
-        main_page = MainPage()
-        self.parent().setCentralWidget(main_page)
-
-
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        self.setWindowTitle('Мое приложение')
-
-        main_page = MainPage()
-        self.setCentralWidget(main_page)
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
+
+    dialog = RegisterDialog()
+    dialog.show()
+    sys.exit(app.exec())

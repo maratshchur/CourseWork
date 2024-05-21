@@ -76,24 +76,24 @@ def get_hint(closest_word_guessed, word_to_guess):
     
     
 
-word_to_guess = get_new_word()
-if word_to_guess != None:
-    load_close_words(word_to_guess)
-    print("Words loaded sucessfully")
-    print("Try to guess the word >.<")
-while True:
-    a=input()
-    if(a=="q"):
-        print("word:", word_to_guess)
-        break
-    elif (a==word_to_guess):
-        print("Congratulations, word guessed !!!!!!!!!")
-    try:
-        print(get_word_closeness(a, word_to_guess))   
-    except Exception as e:
-        print("Some exception")
-        continue
+# word_to_guess = get_new_word()
+# if word_to_guess != None:
+#     load_close_words(word_to_guess)
+#     print("Words loaded sucessfully")
+#     print("Try to guess the word >.<")
+# while True:
+#     a=input()
+#     if(a=="q"):
+#         print("word:", word_to_guess)
+#         break
+#     elif (a==word_to_guess):
+#         print("Congratulations, word guessed !!!!!!!!!")
+#     try:
+#         print(get_word_closeness(a, word_to_guess))   
+#     except Exception as e:
+#         print("Some exception")
+#         continue
   
-# model = KeyedVectors.load_word2vec_format("noun_only_model.txt", binary=False)
-# result = model.most_similar(positive=["орех"], topn=500)
-# print(result)
+model = KeyedVectors.load_word2vec_format("noun_only_model.txt", binary=False)
+result = model.most_similar(positive=["еврей"], topn=100)
+print(result)

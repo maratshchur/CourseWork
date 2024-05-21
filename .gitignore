@@ -3,7 +3,6 @@ noun_only_model.txt
 model.txt
 dict.txt
 all_word.txt
-migrations
 .vscode
 __pycache__
 db.sqlite3

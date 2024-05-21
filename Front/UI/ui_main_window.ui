@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>655</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+    background-color: #F5F5F5; /* medium gray background */
+}
+
+QLabel {
+    font-size: 14px; /* size of label text */
+    font-weight: bold; /* bold label text */
+}
+
+QLineEdit {
+    border: 1px solid #ccc; /* light gray border for input fields */
+    border-radius: 5px; /* rounded corners for input fields */
+    padding: 5px; /* padding for input fields */
+}
+
+QPushButton {
+    border: none; /* no border for buttons */
+    border-radius: 5px; /* rounded corners for buttons */
+    padding: 10px 20px; /* padding for buttons */
+}
+
+QPushButton:hover {
+    background-color: #f0f0f0; /* light gray background on hover */
+}
+
+QPushButton:pressed {
+    background-color: #d0d0d0; /* dark gray background on press */
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QListView" name="current_word_list">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>210</y>
+      <width>431</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QListWidget {
+    /* общий стиль списка */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    padding: 5px;
+}
+
+QListWidget::item {
+    /* стиль отдельного элемента списка */
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+QListWidget::item:selected {
+    /* стиль выделенного элемента списка */
+    background-color: #0078ff;
+    color: #ffffff;
+}
+
+QListWidget::item:hover {
+    /* стиль элемента списка при наведении курсора */
+    background-color: #f7f7f7;
+}
+
+QListWidget::item:disabled {
+    /* стиль недоступного элемента списка */
+    color: #808080;
+}</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="input_field">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>160</y>
+      <width>431</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>20</y>
+      <width>221</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>-1</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    font-size: 26px; /* size of label text */
+    font-weight: bold; /* bold label text */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>LogicOn</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="profile_button">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>20</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../images/download1.png</normaloff>../images/download1.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>45</width>
+      <height>45</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="login_button">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>21</y>
+      <width>52</width>
+      <height>48</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../images/67346.png</normaloff>../images/67346.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>40</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="hint_button">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>510</y>
+      <width>75</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../images/png-clipart-computer-icons-idea-brainstorming-others-miscellaneous-image-file-formats.png</normaloff>../images/png-clipart-computer-icons-idea-brainstorming-others-miscellaneous-image-file-formats.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="other_games_button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>510</y>
+      <width>151</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Другие игры</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>120</y>
+      <width>501</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="game_number_label">
+       <property name="text">
+        <string>Игра №</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="date_label">
+       <property name="text">
+        <string>От:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="attempts_label">
+       <property name="text">
+        <string>Попытки:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="hints_label">
+       <property name="text">
+        <string>Подсказки:</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
