@@ -11,30 +11,18 @@ from register import RegisterPage
 from top_list import TopListPage
 from urls import BASE_URL
 import requests
-from UI.ui_main_window import Ui_MainWindow
+from UI.ui_user_main_window import Ui_Dialog
 from session import check_session, get_session_id
 
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        
-            super(MainWindow, self).__init__()
-            self.ui = Ui_MainWindow()
-            self.ui.setupUi(self)
-            
-            response = check_session(f"{BASE_URL}/check_session")
-            if  response.status_code!=200:
-                self.show_login_page()    
-            else:
-                self.set_ui_connections(response)
+class UserPage(QDialog, Ui_Dialog):
+    def __init__(self, response):
+        super(UserPage, self).__init__()
+        self.setupUi(self)
+        self.set_ui_connections(response)
                 
                 
-                
-    def set_ui_connections(self, response):
-        if response.json().get('is_admin'):
-            self.show_admin_elements()
-        else:
-            self.hide_admin_elements()     
+    def set_ui_connections(self, response):   
         self.username = response.json().get('username')
         self.sorted_words_closeness = None 
         self.current_game = None
@@ -45,33 +33,17 @@ class MainWindow(QMainWindow):
         self.words_closeness = dict()
         self.word_guessed = None
                 
-        self.ui.profile_button.clicked.connect(self.show_my_profile_page)
-        self.ui.top_list_button.clicked.connect(self.show_top_list_page)
-        self.ui.login_button.clicked.connect(self.show_login_page)
-        self.ui.input_field.returnPressed.connect(lambda: self.guess_word(f"{BASE_URL}/guess_word"))
-        self.ui.hint_button.clicked.connect(lambda:  self.get_hint(f"{BASE_URL}/get_hint"))
-        self.ui.other_games_button.clicked.connect(lambda: self.show_other_games(f"{BASE_URL}/words"))
+        self.profile_button.clicked.connect(self.show_my_profile_page)
+        self.top_list_button.clicked.connect(self.show_top_list_page)
+        self.login_button.clicked.connect(self.show_login_page)
+        self.input_field.returnPressed.connect(lambda: self.guess_word(f"{BASE_URL}/guess_word"))
+        self.hint_button.clicked.connect(lambda:  self.get_hint(f"{BASE_URL}/get_hint"))
+        self.other_games_button.clicked.connect(lambda: self.show_other_games(f"{BASE_URL}/words"))
 
         self.get_daily_word(f"{BASE_URL}/daily_word")
         self.download_game_stats(f"{BASE_URL}/game/data")
         
-    def show_admin_elements(self):
-        self.ui.create_tournament_button = QPushButton("Create Tournament", self)
-        self.ui.create_tournament_button.clicked.connect(self.create_tournament)
-        self.ui.la.addWidget(self.ui.create_tournament_button)
-        
-        # Show other admin-only elements
-        self.ui.admin_only_label = QLabel("Admin only", self)
-        self.ui.la.addWidget(self.ui.admin_only_label)
-        
-    def hide_admin_elements(self):
-        self.ui.create_tournament_button.hide()
-        self.ui.admin_only_label.hide()
-    def create_tournament(self):
-        pass
-    # # Create a new tournament dialog
-    #     tournament_dialog = TournamentDialog(self)
-    #     tournament_dialog.exec_()
+
     def show_my_profile_page(self):
     
         self.profile_page = ProfilePage(self.username)
@@ -116,7 +88,7 @@ class MainWindow(QMainWindow):
         
     
     def guess_word(self, url):
-        text = self.ui.input_field.text().strip().lower()
+        text = self.input_field.text().strip().lower()
         
         session_id = get_session_id()
         headers = {'Cookie': f'sessionid={session_id}'}
@@ -177,7 +149,7 @@ class MainWindow(QMainWindow):
                 menu.addAction(QAction(f"Игра №{current_game} от {current_date}", self,\
                                        triggered=partial(self.game_chosen, current_game, current_date, current_word)))
                 
-        menu.exec(self.ui.other_games_button.mapToGlobal(self.ui.other_games_button.rect().center()))
+        menu.exec(self.other_games_button.mapToGlobal(self.other_games_button.rect().center()))
         
     # Переделать !!!!
     def game_chosen(self, _,current_game, current_date, current_word):
@@ -190,15 +162,15 @@ class MainWindow(QMainWindow):
         self.download_game_stats(f"{BASE_URL}/game/data")
             
     def update_ui(self):
-        self.ui.input_field.clear()
-        self.ui.current_word_list.clear()
-        self.ui.attempts_label.setText(f"Попытки: {self.attempts}")
-        self.ui.hints_label.setText(f"Подсказки: {self.hints}")
-        self.ui.game_number_label.setText(f"Игра № {self.current_game}")
-        self.ui.date_label.setText(f"От: {self.current_date}")
+        self.input_field.clear()
+        self.current_word_list.clear()
+        self.attempts_label.setText(f"Попытки: {self.attempts}")
+        self.hints_label.setText(f"Подсказки: {self.hints}")
+        self.game_number_label.setText(f"Игра № {self.current_game}")
+        self.date_label.setText(f"От: {self.current_date}")
         
         for key, value in self.sorted_words_closeness:
-                self.ui.current_word_list.addItem(QListWidgetItem(f"{key}. {value}"))
+                self.current_word_list.addItem(QListWidgetItem(f"{key}. {value}"))
 
             
     def add_word_to_list(self, word, closeness):
@@ -213,8 +185,7 @@ class MainWindow(QMainWindow):
         self.login_page.ui.register_button.clicked.connect(self.show_register_page)
         result = self.login_page.exec()
         if result == QDialog.Accepted:
-            response = check_session(f"{BASE_URL}/check_session")
-            self.set_ui_connections(response)
+            self.close()
 
                
     def show_register_page(self):
@@ -247,6 +218,6 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = MainWindow()
+    window = UserPage()
     window.show()
     sys.exit(app.exec())
