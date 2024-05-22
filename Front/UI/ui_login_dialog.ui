@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+    background-color: #f0f0f0; /* светло-серый фон */
+    font-family: Arial, sans-serif;
+}
+
+/* Общий стиль для кнопок */
+QPushButton {
+    background-color: #4CAF50; /* зеленый фон */
+    color: #ffffff; /* белый текст */
+    border: none; /* без рамки */
+    border-radius: 5px; /* скругленные углы */
+    padding: 10px 20px; /* отступы */
+    font-size: 16px; /* размер шрифта */
+    cursor: pointer; /* указатель мыши */
+}
+
+QPushButton:hover {
+    background-color: #3e8e41; /* темно-зеленый фон */
+}
+
+/* Общий стиль для лейблов */
+QLabel {
+    font-size: 16px; /* размер шрифта */
+    color: #333333; /* темно-серый текст */
+}
+
+/* Общий стиль для строк ввода */
+QLineEdit {
+    background-color: #ffffff; /* белый фон */
+    border: 1px solid #cccccc; /* серая рамка */
+    border-radius: 5px; /* скругленные углы */
+    padding: 10px; /* отступы */
+    font-size: 16px; /* размер шрифта */
+    width: 250px; /* ширина поля */
+}</string>
+  </property>
+  <widget class="QPushButton" name="login_button">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>200</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Войти</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>240</y>
+     <width>251</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: transparent; /* прозрачный фон */
+    border: none; /* без рамки */
+    padding: 10px 20px; /* отступы */
+    font-size: 16px; /* размер шрифта */
+    color: #337ab7; /* синий текст */
+    text-decoration: underline; /* подчеркнутый текст */
+    cursor: pointer; /* указатель мыши */
+}
+
+QPushButton:hover {
+    background-color: #f0f0f0; /* светло-серый фон */
+    color: #23527c; /* темно-синий текст */
+    text-decoration: none; /* без подчеркивания */
+}
+
+QPushButton:pressed {
+    background-color: #e0e0e0; /* серый фон */
+    color: #23527c; /* темно-синий текст */
+}</string>
+   </property>
+   <property name="text">
+    <string>Создать аккаунт</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>30</y>
+     <width>274</width>
+     <height>154</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="username_label">
+      <property name="text">
+       <string> Email</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="username_input"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="password_label">
+      <property name="text">
+       <string>Password</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="password_input"/>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

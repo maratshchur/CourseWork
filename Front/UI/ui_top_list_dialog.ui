@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>298</width>
+    <height>343</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Style the dialog window */
+QDialog {
+    background-color: #f0f0f0; /* light gray background */
+    border: 1px solid #ccc; /* thin gray border */
+    border-radius: 5px; /* rounded corners */
+}
+
+/* Style the label */
+QLabel {
+    font-size: 18px; /* larger font size */
+    font-weight: bold; /* bold font */
+    color: #333; /* dark gray text color */
+}
+
+/* Style the list widget */
+QListWidget {
+    background-color: #fff; /* white background */
+    border: 1px solid #ddd; /* thin gray border */
+    border-radius: 5px; /* rounded corners */
+}
+
+/* Style the list items */
+QListWidgetItem {
+    padding: 10px; /* add some padding to the list items */
+    border-bottom: 1px solid #ccc; /* thin gray border between list items */
+}
+
+QListWidgetItem:hover {
+    background-color: #f0f0f0; /* light gray background on hover */
+}
+
+QListWidgetItem:selected {
+    background-color: #ccc; /* gray background on selection */
+    color: #333; /* dark gray text color on selection */
+}</string>
+  </property>
+  <widget class="QListWidget" name="top_list">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>70</y>
+     <width>256</width>
+     <height>241</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>20</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Лучшие игроки</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

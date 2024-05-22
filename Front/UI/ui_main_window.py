@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QListView, QMainWindow, QPushButton, QSizePolicy,
-    QWidget, QListWidget)
+    QListWidget, QListWidgetItem, QMainWindow, QPushButton,
+    QSizePolicy, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -25,8 +25,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(655, 600)
         MainWindow.setStyleSheet(u"QWidget {\n"
-"    background-color: #F5F5F5; /* medium gray background */\n"
-"}\n"
+"    background-color: #F0F0F0; /* \u0426\u0432\u0435\u0442 \u0444\u043e\u043d\u0430 */}\n"
 "\n"
 "QLabel {\n"
 "    font-size: 14px; /* size of label text */\n"
@@ -143,32 +142,40 @@ class Ui_MainWindow(object):
         self.other_games_button.setAutoFillBackground(False)
         self.other_games_button.setStyleSheet(u"")
         self.other_games_button.setFlat(False)
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(10, 120, 501, 29))
-        self.horizontalLayout = QHBoxLayout(self.widget)
+        self.layoutWidget = QWidget(self.centralwidget)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(10, 120, 501, 29))
+        self.horizontalLayout = QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.game_number_label = QLabel(self.widget)
+        self.game_number_label = QLabel(self.layoutWidget)
         self.game_number_label.setObjectName(u"game_number_label")
 
         self.horizontalLayout.addWidget(self.game_number_label)
 
-        self.date_label = QLabel(self.widget)
+        self.date_label = QLabel(self.layoutWidget)
         self.date_label.setObjectName(u"date_label")
 
         self.horizontalLayout.addWidget(self.date_label)
 
-        self.attempts_label = QLabel(self.widget)
+        self.attempts_label = QLabel(self.layoutWidget)
         self.attempts_label.setObjectName(u"attempts_label")
 
         self.horizontalLayout.addWidget(self.attempts_label)
 
-        self.hints_label = QLabel(self.widget)
+        self.hints_label = QLabel(self.layoutWidget)
         self.hints_label.setObjectName(u"hints_label")
 
         self.horizontalLayout.addWidget(self.hints_label)
 
+        self.top_list_button = QPushButton(self.centralwidget)
+        self.top_list_button.setObjectName(u"top_list_button")
+        self.top_list_button.setGeometry(QRect(510, 20, 51, 51))
+        icon3 = QIcon()
+        icon3.addFile(u"C:/Users/marat/Downloads/imgonline-com-ua-Resize-nB8vUTYJ.jpg", QSize(), QIcon.Normal, QIcon.Off)
+        self.top_list_button.setIcon(icon3)
+        self.top_list_button.setIconSize(QSize(50, 50))
+        self.top_list_button.setFlat(True)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -188,5 +195,6 @@ class Ui_MainWindow(object):
         self.date_label.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442:", None))
         self.attempts_label.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043f\u044b\u0442\u043a\u0438:", None))
         self.hints_label.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0434\u0441\u043a\u0430\u0437\u043a\u0438:", None))
+        self.top_list_button.setText("")
     # retranslateUi
 

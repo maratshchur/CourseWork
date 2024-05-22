@@ -1,40 +1,25 @@
-from PyQt6.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton, QApplication, QVBoxLayout, QMessageBox
-from PyQt6.QtCore import QSettings
+from PySide6.QtWidgets import QApplication, QDialog, QLineEdit,  QLabel, QPushButton, QVBoxLayout, QWidget, QMessageBox, QMainWindow
+from PySide6.QtCore import QSettings
 import sys
-from register import RegisterPage
+import requests
+import json
+from email_verification import VerifyEmailPage
 from urls import BASE_URL
-import requests 
+from UI.ui_login_dialog import Ui_Dialog
+from register import RegisterPage
+from UI.ui_main_window import Ui_MainWindow  # Import the UI for MainWindow
 
 class LoginPage(QDialog):
     def __init__(self):
-        super().__init__()
-
-        self.username_label = QLabel("Email:", self)
-        self.username_input = QLineEdit(self)
-        self.password_label = QLabel("Password:", self)
-        self.password_input = QLineEdit(self)
-        self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
-        self.login_button = QPushButton("Login", self)
-        self.register_button = QPushButton("Register", self)
-
-        self.login_button.clicked.connect(self.login)
-
-        layout = QVBoxLayout()
-        layout.addWidget(self.username_label)
-        layout.addWidget(self.username_input)
-        layout.addWidget(self.password_label)
-        layout.addWidget(self.password_input)
-        layout.addWidget(self.login_button)
-        layout.addWidget(self.register_button)
-
-        self.setLayout(layout)
-
-        self.setWindowTitle("Login")
-        self.resize(300, 200)
+        super(LoginPage, self).__init__()
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self)
+        self.ui.password_input.setEchoMode(QLineEdit.EchoMode.Password)
+        self.ui.login_button.clicked.connect(self.login)
 
     def login(self):
-        username = self.username_input.text()
-        password = self.password_input.text()
+        username = self.ui.username_input.text()
+        password = self.ui.password_input.text()
 
         response = requests.post(f'{BASE_URL}/login', data={'username': username, 'password': password})
 
@@ -43,16 +28,29 @@ class LoginPage(QDialog):
             # Store the session ID securely
             settings = QSettings('MyCompany', 'MyApp')
             settings.setValue('session_id', self.session_id)
-            self.accept()
-            QMessageBox.information(self, 'Success',response.json().get('message', 'Successfully verificated'))
-            self.close()
             
+            self.accept()
+            self.done(QDialog.Accepted)
+            self.close()
+
+            # Create and show the MainWindow
+            
+
         else:
-            QMessageBox.critical(self, 'Error',response.json().get('error','Unknown error'))
+            QMessageBox.critical(self, 'Error', response.json().get('error', 'Unknown error'))
 
 
-if __name__ == '__main__':
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super(MainWindow, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        # Initialize your main window UI here
+
+
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    login_form = LoginPage()
-    login_form.show()
+
+    dialog = LoginPage()
+    dialog.show()
     sys.exit(app.exec())

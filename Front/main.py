@@ -1,74 +1,77 @@
+import sys
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QDialog, QLabel, QMessageBox, QLineEdit,\
+    QListWidgetItem, QListWidget, QMenu, QListView
+from PySide6.QtCore import QRect
+from PySide6.QtGui import QAction
 from functools import partial
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QDialog, QLabel, QMainWindow, QMessageBox, QLineEdit,\
-    QListWidgetItem, QListWidget, QMenu
-from PyQt6.QtGui import QAction
+from email_verification import VerifyEmailPage
 from login import LoginPage
 from profile_page import ProfilePage
 from register import RegisterPage
-import sys
+from top_list import TopListPage
 from urls import BASE_URL
 import requests
+from UI.ui_main_window import Ui_MainWindow
 from session import check_session, get_session_id
 
-class MainPage(QMainWindow):
+
+class MainWindow(QMainWindow):
     def __init__(self):
-        response = check_session(f"{BASE_URL}/check_session")
-        if  response.status_code==200:
-            super().__init__()
-            self.username = response.json().get('username')
-            self.sorted_words_closeness = None 
-            self.current_game = None
-            self.attempts = None
-            self.hints = None
-            self.current_date = None
-            self.current_word = None
-            self.words_closeness = dict()
-            self.word_guessed = None
+        
+            super(MainWindow, self).__init__()
+            self.ui = Ui_MainWindow()
+            self.ui.setupUi(self)
             
-            self.current_word_list = QListWidget()
-            self.game_number_label = QLabel("Игра №:")
-            self.attempts_label = QLabel("")
-            self.hints_label = QLabel("")
-            self.date_label = QLabel("Дата:")
-            self.input_field = QLineEdit()
-            self.login_button = QPushButton("Войти")
-            self.hint_button = QPushButton("Подсказка")
-            self.other_games_button = QPushButton("Другие игры")
-            self.profile_button = QPushButton("Профиль")
-            self.profile_button.clicked.connect(self.show_my_profile_page)
-
-            self.login_button.clicked.connect(self.show_login_page)
-            self.input_field.returnPressed.connect(lambda: self.guess_word(f"{BASE_URL}/guess_word"))
-            self.hint_button.clicked.connect(lambda:  self.get_hint(f"{BASE_URL}/get_hint"))
-            self.other_games_button.clicked.connect(lambda: self.show_other_games(f"{BASE_URL}/words"))
-
-            central_widget = QWidget()
-            self.setCentralWidget(central_widget)
-
-            layout = QVBoxLayout()
-            layout.addWidget(self.profile_button)
-            layout.addWidget(self.input_field)
-            layout.addWidget(self.login_button)
-            layout.addWidget(self.hint_button)
-            layout.addWidget(self.other_games_button)
-
-            layout.addWidget(self.game_number_label)
-            layout.addWidget(self.date_label)
-            layout.addWidget(self.current_word_list)
-            layout.addWidget(self.attempts_label)
-            layout.addWidget(self.hints_label)
-            
-
-
-            central_widget.setLayout(layout)
-            self.setWindowTitle("Main Page")
-            self.resize(400, 200)
-            
-            self.get_daily_word(f"{BASE_URL}/daily_word")
-            self.download_game_stats(f"{BASE_URL}/game/data")
+            response = check_session(f"{BASE_URL}/check_session")
+            if  response.status_code!=200:
+                self.show_login_page()    
+            else:
+                self.set_ui_connections(response)
+                
+                
+                
+    def set_ui_connections(self, response):
+        if response.json().get('is_admin'):
+            self.show_admin_elements()
         else:
-            self.show_login_page()
+            self.hide_admin_elements()     
+        self.username = response.json().get('username')
+        self.sorted_words_closeness = None 
+        self.current_game = None
+        self.attempts = None
+        self.hints = None
+        self.current_date = None
+        self.current_word = None
+        self.words_closeness = dict()
+        self.word_guessed = None
+                
+        self.ui.profile_button.clicked.connect(self.show_my_profile_page)
+        self.ui.top_list_button.clicked.connect(self.show_top_list_page)
+        self.ui.login_button.clicked.connect(self.show_login_page)
+        self.ui.input_field.returnPressed.connect(lambda: self.guess_word(f"{BASE_URL}/guess_word"))
+        self.ui.hint_button.clicked.connect(lambda:  self.get_hint(f"{BASE_URL}/get_hint"))
+        self.ui.other_games_button.clicked.connect(lambda: self.show_other_games(f"{BASE_URL}/words"))
 
+        self.get_daily_word(f"{BASE_URL}/daily_word")
+        self.download_game_stats(f"{BASE_URL}/game/data")
+        
+    def show_admin_elements(self):
+        self.ui.create_tournament_button = QPushButton("Create Tournament", self)
+        self.ui.create_tournament_button.clicked.connect(self.create_tournament)
+        self.ui.la.addWidget(self.ui.create_tournament_button)
+        
+        # Show other admin-only elements
+        self.ui.admin_only_label = QLabel("Admin only", self)
+        self.ui.la.addWidget(self.ui.admin_only_label)
+        
+    def hide_admin_elements(self):
+        self.ui.create_tournament_button.hide()
+        self.ui.admin_only_label.hide()
+    def create_tournament(self):
+        pass
+    # # Create a new tournament dialog
+    #     tournament_dialog = TournamentDialog(self)
+    #     tournament_dialog.exec_()
     def show_my_profile_page(self):
     
         self.profile_page = ProfilePage(self.username)
@@ -83,8 +86,6 @@ class MainPage(QMainWindow):
             self.current_date = response.get("date")
             
  
-    
-
     def download_game_stats(self, url):
         self.words_closeness.clear()
         
@@ -115,7 +116,7 @@ class MainPage(QMainWindow):
         
     
     def guess_word(self, url):
-        text = self.input_field.text().strip().lower()
+        text = self.ui.input_field.text().strip().lower()
         
         session_id = get_session_id()
         headers = {'Cookie': f'sessionid={session_id}'}
@@ -176,49 +177,60 @@ class MainPage(QMainWindow):
                 menu.addAction(QAction(f"Игра №{current_game} от {current_date}", self,\
                                        triggered=partial(self.game_chosen, current_game, current_date, current_word)))
                 
-        menu.exec(self.other_games_button.mapToGlobal(self.other_games_button.rect().center()))
+        menu.exec(self.ui.other_games_button.mapToGlobal(self.ui.other_games_button.rect().center()))
         
-
-    def game_chosen(self, current_game, current_date, current_word):
+    # Переделать !!!!
+    def game_chosen(self, _,current_game, current_date, current_word):
         self.save_game_data()
         self.word_guessed = False
-        self.current_game = current_game
-        self.current_date = current_date
-        self.current_word = current_word
+        self.current_game = _
+        self.current_date = current_game
+        self.current_word = current_date
 
         self.download_game_stats(f"{BASE_URL}/game/data")
             
     def update_ui(self):
-        self.input_field.clear()
-        self.current_word_list.clear()
-        self.attempts_label.setText(f"Попытки: {self.attempts}")
-        self.hints_label.setText(f"Подсказки: {self.hints}")
-        self.game_number_label.setText(f"Игра № {self.current_game}")
-        self.date_label.setText(f"От: {self.current_date}")
+        self.ui.input_field.clear()
+        self.ui.current_word_list.clear()
+        self.ui.attempts_label.setText(f"Попытки: {self.attempts}")
+        self.ui.hints_label.setText(f"Подсказки: {self.hints}")
+        self.ui.game_number_label.setText(f"Игра № {self.current_game}")
+        self.ui.date_label.setText(f"От: {self.current_date}")
         
         for key, value in self.sorted_words_closeness:
-                self.current_word_list.addItem(QListWidgetItem(f"{key}. {value}"))
-                
-    
+                self.ui.current_word_list.addItem(QListWidgetItem(f"{key}. {value}"))
+
+            
     def add_word_to_list(self, word, closeness):
         self.words_closeness[closeness] = word
         self.sorted_words_closeness = sorted(self.words_closeness.items())
         self.update_ui()
             
-    
-        
 
     def show_login_page(self):
         self.login_page = LoginPage()
-        self.login_page.register_button.clicked.connect(self.show_register_page)
-        self.login_page.register_button.clicked.connect(self.login_page.close)
-        self.login_page.show()
+        self.login_page.ui.register_button.clicked.connect(self.login_page.close)
+        self.login_page.ui.register_button.clicked.connect(self.show_register_page)
+        result = self.login_page.exec()
+        if result == QDialog.Accepted:
+            response = check_session(f"{BASE_URL}/check_session")
+            self.set_ui_connections(response)
 
+               
     def show_register_page(self):
         self.register_page = RegisterPage()
-        self.register_page.show()
-        
-        
+        result = self.register_page.exec()
+
+        if result == QDialog.Accepted:
+            self.email_verification_page = VerifyEmailPage(self.register_page.email, self.register_page.username)
+            result = self.email_verification_page.exec()
+            if result == QDialog.Accepted:
+                self.show_login_page()
+    
+    def show_top_list_page(self):
+        self.top_list_page = TopListPage()
+        self.top_list_page.show()
+ 
     def closeEvent(self, event):
         self.save_game_data()
     
@@ -233,12 +245,8 @@ class MainPage(QMainWindow):
     'words': self.words_closeness,
     'guessed': self.word_guessed})
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main_page = MainPage()
-    main_page.show()
+    window = MainWindow()
+    window.show()
     sys.exit(app.exec())
-    
-    

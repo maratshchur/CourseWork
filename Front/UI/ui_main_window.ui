@@ -15,8 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget {
-    background-color: #F5F5F5; /* medium gray background */
-}
+    background-color: #F0F0F0; /* Цвет фона */}
 
 QLabel {
     font-size: 14px; /* size of label text */
@@ -44,7 +43,7 @@ QPushButton:pressed {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QListView" name="current_word_list">
+   <widget class="QListWidget" name="current_word_list">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -242,7 +241,7 @@ QListWidget::item:disabled {
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -281,6 +280,32 @@ QListWidget::item:disabled {
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="top_list_button">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>20</y>
+      <width>51</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>C:/Users/marat/Downloads/imgonline-com-ua-Resize-nB8vUTYJ.jpg</normaloff>C:/Users/marat/Downloads/imgonline-com-ua-Resize-nB8vUTYJ.jpg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
  </widget>

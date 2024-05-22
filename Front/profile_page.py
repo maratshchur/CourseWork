@@ -1,30 +1,23 @@
-from PyQt6.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QApplication, QMessageBox
+from PySide6.QtWidgets import QApplication, QDialog, QLineEdit,  QLabel, QPushButton, QVBoxLayout, QWidget, QMessageBox
+import sys
 import requests
-from session import get_session_id
+import json
+from email_verification import VerifyEmailPage
 from urls import BASE_URL
+from UI.ui_profile_dialog import Ui_Dialog
 
-class ProfilePage(QDialog):
+class ProfilePage(QDialog, Ui_Dialog):
     def __init__(self, username):
-        super().__init__()
+        super(ProfilePage, self).__init__()
+        self.setupUi(self)
         self.username = username
-        self.setWindowTitle("Профиль")
-        self.resize(300, 200)
-        layout = QVBoxLayout()
-        self.setLayout(layout)
         self.rating, self.games_played = self.get_profile_data(f"{BASE_URL}/profile")
         
-        self.username_label = QLabel(f"Имя пользователя: {self.username}")
-        layout.addWidget(self.username_label)
+        self.username_label.setText(f"Имя пользователя: {self.username}")  
 
-        self.rating_label = QLabel(f"Рейтинг: {str(self.rating)}")
-        layout.addWidget(self.rating_label)
+        self.rating_label.setText(f"Рейтинг: {str(self.rating)}")
 
-        self.games_played_label = QLabel(f"Игр сыграно: {str(self.games_played)}")
-        layout.addWidget(self.games_played_label)
-
-        self.close_button = QPushButton("Закрыть")
-        self.close_button.clicked.connect(self.close)
-        layout.addWidget(self.close_button)
+        self.games_played_label.setText(f"Игр сыграно: {str(self.games_played)}")
         
     def get_profile_data(self, url):
             response = requests.get(url, {"username": self.username})
@@ -32,3 +25,10 @@ class ProfilePage(QDialog):
             games_played = response.json().get('games_played')
             return rating, games_played
             
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+
+    dialog = ProfilePage('marat')
+    dialog.show()
+    sys.exit(app.exec())
