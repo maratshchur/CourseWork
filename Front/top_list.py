@@ -27,7 +27,7 @@ class TopListPage(QDialog, Ui_Dialog):
     def render_profile(self, item):
         username = item.text().split('.')[1].strip()  # Get the username from the item text
         self.profile_page = ProfilePage(username)
-        self.profile_page.show()
+        self.profile_page.exec()
         
         
 if __name__ == "__main__":

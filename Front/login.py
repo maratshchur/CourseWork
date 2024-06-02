@@ -29,10 +29,7 @@ class LoginPage(QDialog):
             settings.setValue('session_id', self.session_id)
             
             self.accept()
-            self.close()
-
-            # Create and show the MainWindow
-            
+            self.close()            
 
         else:
             QMessageBox.critical(self, 'Error', response.json().get('error', 'Unknown error'))

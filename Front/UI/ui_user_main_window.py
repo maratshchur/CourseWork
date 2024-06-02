@@ -24,6 +24,33 @@ class Ui_Dialog(object):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
         Dialog.resize(684, 596)
+        Dialog.setStyleSheet(u"QDiaog {\n"
+"    background-color: #F0F0F0; /* \u0426\u0432\u0435\u0442 \u0444\u043e\u043d\u0430 */}\n"
+"\n"
+"QLabel {\n"
+"    font-size: 14px; /* size of label text */\n"
+"    font-weight: bold; /* bold label text */\n"
+"}\n"
+"\n"
+"QLineEdit {\n"
+"    border: 1px solid #ccc; /* light gray border for input fields */\n"
+"    border-radius: 5px; /* rounded corners for input fields */\n"
+"    padding: 5px; /* padding for input fields */\n"
+"}\n"
+"\n"
+"QPushButton {\n"
+"    border: none; /* no border for buttons */\n"
+"    border-radius: 5px; /* rounded corners for buttons */\n"
+"    padding: 10px 20px; /* padding for buttons */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #f0f0f0; /* light gray background on hover */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #d0d0d0; /* dark gray background on press */\n"
+"}")
         self.layoutWidget = QWidget(Dialog)
         self.layoutWidget.setObjectName(u"layoutWidget")
         self.layoutWidget.setGeometry(QRect(20, 130, 501, 29))
@@ -87,16 +114,6 @@ class Ui_Dialog(object):
 "    /* \u0441\u0442\u0438\u043b\u044c \u043d\u0435\u0434\u043e\u0441\u0442\u0443\u043f\u043d\u043e\u0433\u043e \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u0430 \u0441\u043f\u0438\u0441\u043a\u0430 */\n"
 "    color: #808080;\n"
 "}")
-        self.other_games_button = QPushButton(Dialog)
-        self.other_games_button.setObjectName(u"other_games_button")
-        self.other_games_button.setGeometry(QRect(20, 520, 151, 61))
-        font1 = QFont()
-        font1.setPointSize(12)
-        font1.setBold(True)
-        self.other_games_button.setFont(font1)
-        self.other_games_button.setAutoFillBackground(False)
-        self.other_games_button.setStyleSheet(u"")
-        self.other_games_button.setFlat(False)
         self.login_button = QPushButton(Dialog)
         self.login_button.setObjectName(u"login_button")
         self.login_button.setGeometry(QRect(21, 31, 52, 48))
@@ -107,7 +124,7 @@ class Ui_Dialog(object):
         self.login_button.setFlat(True)
         self.profile_button = QPushButton(Dialog)
         self.profile_button.setObjectName(u"profile_button")
-        self.profile_button.setGeometry(QRect(590, 30, 61, 51))
+        self.profile_button.setGeometry(QRect(570, 30, 61, 51))
         icon1 = QIcon()
         icon1.addFile(u"../images/download1.png", QSize(), QIcon.Normal, QIcon.Off)
         self.profile_button.setIcon(icon1)
@@ -115,10 +132,10 @@ class Ui_Dialog(object):
         self.profile_button.setFlat(True)
         self.label_4 = QLabel(Dialog)
         self.label_4.setObjectName(u"label_4")
-        self.label_4.setGeometry(QRect(230, 30, 221, 51))
-        font2 = QFont()
-        font2.setBold(True)
-        self.label_4.setFont(font2)
+        self.label_4.setGeometry(QRect(210, 30, 221, 51))
+        font1 = QFont()
+        font1.setBold(True)
+        self.label_4.setFont(font1)
         self.label_4.setStyleSheet(u"QLabel {\n"
 "    font-size: 26px; /* size of label text */\n"
 "    font-weight: bold; /* bold label text */\n"
@@ -134,7 +151,7 @@ class Ui_Dialog(object):
         self.hint_button.setFlat(True)
         self.top_list_button = QPushButton(Dialog)
         self.top_list_button.setObjectName(u"top_list_button")
-        self.top_list_button.setGeometry(QRect(520, 30, 51, 51))
+        self.top_list_button.setGeometry(QRect(500, 30, 51, 51))
         icon3 = QIcon()
         icon3.addFile(u"C:/Users/marat/Downloads/imgonline-com-ua-Resize-nB8vUTYJ.jpg", QSize(), QIcon.Normal, QIcon.Off)
         self.top_list_button.setIcon(icon3)
@@ -143,10 +160,49 @@ class Ui_Dialog(object):
         self.input_field = QLineEdit(Dialog)
         self.input_field.setObjectName(u"input_field")
         self.input_field.setGeometry(QRect(20, 170, 431, 31))
+        font2 = QFont()
+        font2.setPointSize(11)
+        font2.setBold(True)
+        self.input_field.setFont(font2)
+        self.layoutWidget1 = QWidget(Dialog)
+        self.layoutWidget1.setObjectName(u"layoutWidget1")
+        self.layoutWidget1.setGeometry(QRect(20, 527, 491, 51))
+        self.horizontalLayout_3 = QHBoxLayout(self.layoutWidget1)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.other_games_button = QPushButton(self.layoutWidget1)
+        self.other_games_button.setObjectName(u"other_games_button")
         font3 = QFont()
-        font3.setPointSize(11)
+        font3.setPointSize(12)
         font3.setBold(True)
-        self.input_field.setFont(font3)
+        self.other_games_button.setFont(font3)
+        self.other_games_button.setAutoFillBackground(False)
+        self.other_games_button.setStyleSheet(u"QPushButton {\n"
+"    background-color: #ffffff; /* \u0431\u0435\u043b\u044b\u0439 \u0446\u0432\u0435\u0442 */\n"
+"    color: #333333; /* \u0442\u0435\u043c\u043d\u043e-\u0441\u0435\u0440\u044b\u0439 \u0442\u0435\u043a\u0441\u0442 */\n"
+"    border: 1px solid #cccccc; /* \u0441\u0435\u0440\u0430\u044f \u0440\u0430\u043c\u043a\u0430 */\n"
+"    border-radius: 5px; /* \u0437\u0430\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u043d\u0430\u044f \u0440\u0430\u043c\u043a\u0430 */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #f7f7f7; /* \u0441\u0432\u0435\u0442\u043b\u043e-\u0441\u0435\u0440\u044b\u0439 \u0446\u0432\u0435\u0442 \u043f\u0440\u0438 \u043d\u0430\u0436\u0430\u0442\u0438\u0438 */\n"
+"}")
+        self.other_games_button.setFlat(False)
+
+        self.horizontalLayout_2.addWidget(self.other_games_button)
+
+
+        self.horizontalLayout_3.addLayout(self.horizontalLayout_2)
+
+        self.else_button = QPushButton(Dialog)
+        self.else_button.setObjectName(u"else_button")
+        self.else_button.setGeometry(QRect(630, 30, 61, 51))
+        icon4 = QIcon()
+        icon4.addFile(u"../images/three_dots_vertical_menu_icon_184615.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.else_button.setIcon(icon4)
+        self.else_button.setIconSize(QSize(40, 40))
 
         self.retranslateUi(Dialog)
 
@@ -159,12 +215,13 @@ class Ui_Dialog(object):
         self.date_label.setText(QCoreApplication.translate("Dialog", u"\u041e\u0442:", None))
         self.attempts_label.setText(QCoreApplication.translate("Dialog", u"\u041f\u043e\u043f\u044b\u0442\u043a\u0438:", None))
         self.hints_label.setText(QCoreApplication.translate("Dialog", u"\u041f\u043e\u0434\u0441\u043a\u0430\u0437\u043a\u0438:", None))
-        self.other_games_button.setText(QCoreApplication.translate("Dialog", u"\u0414\u0440\u0443\u0433\u0438\u0435 \u0438\u0433\u0440\u044b", None))
         self.login_button.setText("")
         self.profile_button.setText("")
         self.label_4.setText(QCoreApplication.translate("Dialog", u"LogicOn", None))
         self.hint_button.setText("")
         self.top_list_button.setText("")
         self.input_field.setText("")
+        self.other_games_button.setText(QCoreApplication.translate("Dialog", u"\u0414\u0440\u0443\u0433\u0438\u0435 \u0438\u0433\u0440\u044b", None))
+        self.else_button.setText("")
     # retranslateUi
 
