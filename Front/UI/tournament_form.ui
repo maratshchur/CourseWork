@@ -1,78 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>298</width>
-    <height>343</height>
+    <width>362</width>
+    <height>452</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/* Style the dialog window */
-QDialog{
+   <string notr="true">QWidget{
 background-color: #FFFBF5; /* белый бэкграунд */
 }
 
-/* Style the label */
 QLabel {
-    font-size: 18px; /* larger font size */
-    font-weight: bold; /* bold font */
-    color: #333; /* dark gray text color */
+    font-size: 14px; /* size of label text */
+    font-weight: bold; /* bold label text */
 }
 
-/* Style the list widget */
-QListWidget {
-    background-color: #fff; /* white background */
-    border: 1px solid #ddd; /* thin gray border */
-    border-radius: 5px; /* rounded corners */
+QLineEdit {
+    border: 1px solid #ccc; /* light gray border for input fields */
+    border-radius: 5px; /* rounded corners for input fields */
+    padding: 5px; /* padding for input fields */
 }
 
-/* Style the list items */
-QListWidgetItem {
-    padding: 10px; /* add some padding to the list items */
-    border-bottom: 1px solid #ccc; /* thin gray border between list items */
+QPushButton {
+    border: none; /* no border for buttons */
+    border-radius: 5px; /* rounded corners for buttons */
+    padding: 10px 20px; /* padding for buttons */
 }
 
-QListWidgetItem:hover {
+QPushButton:hover {
     background-color: #f0f0f0; /* light gray background on hover */
 }
 
-QListWidgetItem:selected {
-    background-color: #ccc; /* gray background on selection */
-    color: #333; /* dark gray text color on selection */
+QPushButton:pressed {
+    background-color: #d0d0d0; /* dark gray background on press */
 }</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLineEdit" name="input_field">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>20</y>
-     <width>161</width>
+     <x>10</x>
+     <y>50</y>
+     <width>341</width>
      <height>31</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">QDialog{
-background-color: #FFFBF5; /* белый бэкграунд */
-}</string>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
-    <string>Лучшие игроки</string>
+    <string/>
    </property>
   </widget>
-  <widget class="QListWidget" name="top_list">
+  <widget class="QListWidget" name="current_word_list">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>60</y>
-     <width>221</width>
-     <height>261</height>
+     <x>10</x>
+     <y>90</y>
+     <width>341</width>
+     <height>331</height>
     </rect>
    </property>
    <property name="font">
@@ -116,6 +112,19 @@ QListWidget::item:selected:hover {
     color: #222;
 }
 </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>201</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Попытки:</string>
    </property>
   </widget>
  </widget>

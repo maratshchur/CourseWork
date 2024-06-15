@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>686</width>
+    <height>543</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog{
+background-color: #FFFBF5; /* белый бэкграунд */
+}
+QLabel {
+    font-size: 14px; /* size of label text */
+    font-weight: bold; /* bold label text */
+}
+
+</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>451</width>
+     <height>511</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QTabWidget::pane {
+    border: None;
+    background-color: #FFFBF5; /* Цвет фона */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+QTabWidget::tab-bar {
+    alignment: left;
+}
+
+QTabBar::tab {
+    background-color: #666; /* цвет неактивной вкладки */
+    color: #fff;
+    padding: 10px;
+    border: 1px solid #666;
+    border-radius: 5px 5px 0 0;
+}
+
+QTabBar::tab:selected {
+    background-color: #FFC107; /* цвет активной вкладки */
+    color: #fff;
+    border-bottom: 2px solid #FFC107;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+}
+
+QTabBar::tab:hover {
+    background-color: #FF9800; /* цвет при наведении курсора */
+    color: #fff;
+    border-bottom: 1px solid #FF9800;
+}
+
+QTabBar::tab:disabled {
+    background-color: #ccc; /* цвет недоступной вкладки */
+    color: #666;
+    border-bottom: 1px solid #ccc;
+}</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="title_label">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>10</y>
+     <width>521</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QLabel {
+    font-size: 18px; /* size of label text */
+    font-weight: bold; /* bold label text */
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Название турнира</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>120</y>
+     <width>221</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QLabel {
+    font-size: 14px; /* size of label text */
+    font-weight: bold; /* bold label text */
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Турнирная таблица</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="standings_list">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>150</y>
+     <width>221</width>
+     <height>331</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QListWidget {
+    /* общий стиль списка */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #F4EDE2;
+    padding: 5px;
+}
+
+QListWidget::item {
+    /* стиль отдельного элемента списка */
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+}
+
+QListWidget::item:hover {
+    /* стиль элемента при наведении курсора */
+    background-color: #E6DAC3;
+    border-bottom: 2px solid #aaa;
+}
+
+QListWidget::item:selected {
+    /* стиль выбранного элемента */
+    background-color: #C9C4B5;
+    border-bottom: 2px solid #666;
+    color: #333;
+}
+
+QListWidget::item:selected:hover {
+    /* стиль выбранного элемента при наведении курсора */
+    background-color: #B3A892;
+    border-bottom: 2px solid #444;
+    color: #222;
+}
+</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="remaining_time_label">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>510</y>
+     <width>181</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,33 +1,32 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QDialog, QLabel, QMessageBox, QLineEdit,\
+from PySide6.QtWidgets import QApplication, QDialog, QLabel, QMessageBox,\
     QListWidgetItem, QListWidget, QMenu, QListView
-from PySide6.QtCore import QRect
-from PySide6.QtGui import QAction
+from PySide6.QtCore import QRect, Qt
+from PySide6.QtGui import QAction, QColor, QBrush
 from functools import partial
+from all_messages import MessageWindow
 from developers_info_page import DevelopersInfoPage
-from email_verification import VerifyEmailPage
 from faq_page import FAQDialog
-from login import LoginPage
 from profile_page import ProfilePage
-from register import RegisterPage
 from top_list import TopListPage
+from tournament_detail_page import TournamentDetailWindow
 from urls import BASE_URL
 import requests
 from UI.ui_user_main_window import Ui_Dialog
-from session import check_session, get_session_id
-from PySide6.QtCore import Qt
+from session import get_session_id
 
 class UserPage(QDialog):
     def __init__(self, response):
         super(UserPage, self).__init__()
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+        self.session_id = get_session_id()
         self.set_ui_connections(response)
-                
-                
+       
+
     def set_ui_connections(self, response):   
         self.username = response.json().get('username')
-        self.sorted_words_closeness = None 
+        self.sorted_words_closeness = []
         self.current_game = None
         self.attempts = None
         self.training_mode = False
@@ -36,7 +35,10 @@ class UserPage(QDialog):
         self.current_word = None
         self.words_closeness = dict()
         self.word_guessed = None
-                
+        self.tournaments_list = []
+        self.was_rejected = False
+        self.logout= False
+
         self.ui.profile_button.clicked.connect(self.show_my_profile_page)
         self.ui.top_list_button.clicked.connect(self.show_top_list_page)
         self.ui.login_button.clicked.connect(self.log_out)
@@ -44,23 +46,41 @@ class UserPage(QDialog):
         self.ui.hint_button.clicked.connect(lambda:  self.get_hint(f"{BASE_URL}/get_hint"))
         self.ui.other_games_button.clicked.connect(lambda: self.show_other_games(f"{BASE_URL}/words"))
         self.ui.else_button.clicked.connect(self.show_game_options)
-
-
+        self.ui.tournament_list_widget.itemClicked.connect(self.show_tournament_detail_page)
+        self.ui.pushButton.clicked.connect(self.open_message_dialog)
         
         self.ui.other_games_button.setAutoDefault(False)
         self.ui.profile_button.setAutoDefault(False)
         self.ui.top_list_button.setAutoDefault(False)
         self.ui.login_button.setAutoDefault(False)
         self.ui.hint_button.setAutoDefault(False)
+        self.ui.pushButton.setAutoDefault(False)
+        self.ui.else_button.setAutoDefault(False)
 
 
-        
 
         self.ui.input_field.setPlaceholderText("Введите слово")
 
         self.get_daily_word(f"{BASE_URL}/daily_word")
         self.download_game_stats(f"{BASE_URL}/game/data")
+        self.download_available_tournaments(f"{BASE_URL}/upcoming_tournaments")
+        self.check_new_messages()
+
+    def open_message_dialog(self):
+        headers = {'Cookie': f'sessionid={self.session_id}'}
+        response = requests.get(f"{BASE_URL}/messages/", headers=headers)
+        response = response.json()
+        message_dialog = MessageWindow(response.get("messages"))
+        message_dialog.exec()
         
+    def check_new_messages(self):
+        headers = {'Cookie': f'sessionid={self.session_id}'}
+        response = requests.get(f"{BASE_URL}/new_messages/", headers=headers)
+        if response.status_code==200:
+            response=response.json()
+            if not response.get("new_messages"):
+                self.ui.new_message.hide()
+            
     def show_developers_info_page(self):
         self.developers_info_page = DevelopersInfoPage()
         self.developers_info_page.exec()
@@ -70,7 +90,6 @@ class UserPage(QDialog):
         self.faq_page.exec()
         
     def show_my_profile_page(self):
-    
         self.profile_page = ProfilePage(self.username)
         self.profile_page.exec()
                 
@@ -87,8 +106,7 @@ class UserPage(QDialog):
         self.words_closeness.clear()
         
         if self.current_game:
-            session_id = get_session_id()
-            headers = {'Cookie': f'sessionid={session_id}'}
+            headers = {'Cookie': f'sessionid={self.session_id}'}
             response = requests.get(url, headers=headers, params={'game_number': self.current_game})
             
             if response.status_code==200:
@@ -135,8 +153,7 @@ class UserPage(QDialog):
             self.attempts+=1
         
     def guess_rating_word(self,url,text):
-        session_id = get_session_id()
-        headers = {'Cookie': f'sessionid={session_id}'}
+        headers = {'Cookie': f'sessionid={self.session_id}'}
         response = requests.get(url, headers=headers, params={'game_word': self.current_word, 'user_word': text, 'game_number':self.current_game})
         
         if response.status_code==200:
@@ -165,13 +182,11 @@ class UserPage(QDialog):
         return rating
     
     def give_rating_to_user(self, quantity):
-        session_id = get_session_id()
-        headers = {'Cookie': f'sessionid={session_id}'}
+        headers = {'Cookie': f'sessionid={self.session_id}'}
         response = requests.put(f"{BASE_URL}/add_rating", headers=headers, params={'rating_quantity': quantity})
 
     def inc_game_number(self):
-        session_id = get_session_id()
-        headers = {'Cookie': f'sessionid={session_id}'}
+        headers = {'Cookie': f'sessionid={self.session_id}'}
         response = requests.put(f"{BASE_URL}/add_games_quantity", headers=headers)
         
         
@@ -291,29 +306,50 @@ class UserPage(QDialog):
     def update_ui(self):
         self.ui.input_field.clear()
         self.ui.current_word_list.clear()
+        self.ui.tournament_list_widget.clear()
+
         self.ui.attempts_label.setText(f"Попытки: {self.attempts}")
         self.ui.hints_label.setText(f"Подсказки: {self.hints}")
         self.ui.game_number_label.setText(f"Игра № {self.current_game}")
         self.ui.date_label.setText(f"От: {self.current_date}")
         
         for key, value in self.sorted_words_closeness:
-                self.ui.current_word_list.addItem(QListWidgetItem(f"{key}. {value}"))
-
-            
+            item = QListWidgetItem(f"{key}. {value}")
+            if key == 1:
+                item.setBackground(QBrush(QColor("skyblue")))  # Bright gold for the winning word!
+            elif key < 300:
+                item.setBackground(QBrush(QColor("palegreen")))  # Light green
+            elif key < 1000:
+                item.setBackground(QBrush(QColor("orange")))  # Light orange
+            else:
+                item.setBackground(QBrush(QColor("salmon")))  # Light red
+            self.ui.current_word_list.addItem(item)
+                    
+        for tournament in self.tournaments_list:
+            item = QListWidgetItem( 
+                    f"{tournament[0]}\n"
+                    f"Количество раундов: {tournament[1]}\n"
+                    f"{tournament[2]} мин.")
+            item.setData(Qt.UserRole, tournament[3])
+            self.ui.tournament_list_widget.addItem(item)
+                
     def add_word_to_list(self, word, closeness):
         self.words_closeness[closeness] = word
         self.sorted_words_closeness = sorted(self.words_closeness.items())
         self.update_ui()
             
-
+    def closeEvent(self, event):
+        self.was_rejected = True
+        
     def log_out(self):
-        session_id = get_session_id()
-        headers = {'Cookie': f'sessionid={session_id}'}
+        headers = {'Cookie': f'sessionid={self.session_id}'}
         self.save_game_data()
         response = requests.post(f"{BASE_URL}/logout", headers=headers)
         if response.status_code == 200:
             QMessageBox.information(self, "Logged out", "You have been logged out successfully!")
+            self.logout=True
             self.close()
+            
         else:
             QMessageBox.critical(self, "Error", "Failed to log out. Please try again.")
     
@@ -322,8 +358,7 @@ class UserPage(QDialog):
         self.top_list_page.exec()
     
     def save_game_data(self):
-        session_id = get_session_id()
-        headers = {'Cookie': f'sessionid={session_id}'}
+        headers = {'Cookie': f'sessionid={self.session_id}'}
         response = requests.put(f"{BASE_URL}/save_statistic", headers=headers, json={
     'game_number': self.current_game,
     'attempts': self.attempts,
@@ -331,8 +366,28 @@ class UserPage(QDialog):
     'words': self.words_closeness,
     'guessed': self.word_guessed})
 
+    def download_available_tournaments(self, url):
+        self.ui.tournament_list_widget.clear()
+        
+        headers = {'Cookie': f'sessionid={self.session_id}'}
+        response = requests.get(url, headers=headers)
+            
+        if response.status_code==200:
+            response = response.json()              
+            for tournament in response:
+                self.tournaments_list.append((tournament.get("title"), tournament.get("number_of_rounds"),\
+                    tournament.get("duration"), tournament.get("id")))  
+        
+        self.update_ui()    
+    
+    def show_tournament_detail_page(self, item):
+        id = item.data(Qt.UserRole)
+        detail_window = TournamentDetailWindow(id)
+        detail_window.exec()
+        
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = UserPage()
+    window = UserPage({"username": "test"})
     window.show()
     sys.exit(app.exec())

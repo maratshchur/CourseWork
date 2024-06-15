@@ -21,12 +21,18 @@ class StartPage(QDialog):
             if response.status_code == 200:
                 if response.json().get('is_admin'):
                     self.admin_page = AdminPage()
-                    self.admin_page.rejected.connect(lambda: self.break_loop(True))  # Break the loop if the user closes the login page
                     self.admin_page.exec()
+                    if self.admin_page.was_rejected and self.admin_page.log_out:
+                        continue
+                    elif self.admin_page.was_rejected:
+                        self.break_loop(True)
                 else:
                     self.user_page = UserPage(response)
-                    self.user_page.rejected.connect(lambda: self.break_loop_main_page(True))  # Break the loop if the user closes the login page
                     self.user_page.exec()
+                    if self.user_page.was_rejected and self.user_page.logout:
+                        continue
+                    elif self.user_page.was_rejected:
+                        self.break_loop_main_page(True)
                     
             else:
                 self.show_login_page()
@@ -38,8 +44,8 @@ class StartPage(QDialog):
             self.email_verification_page = VerifyEmailPage(self.register_page.email, self.register_page.username)
             result = self.email_verification_page.exec()
             if result == QDialog.Accepted:
-                self.show_login_page()
-    
+                pass
+            
     def show_login_page(self):
         self.login_page = LoginPage()
         # self.login_page.ui.register_button.clicked.connect(self.login_page.close)

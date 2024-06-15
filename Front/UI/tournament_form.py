@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'ui_top_list_dialog.ui'
+## Form generated from reading UI file 'tournament_form.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.0
 ##
@@ -15,62 +15,57 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QLabel, QListWidget,
+from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QListWidget,
     QListWidgetItem, QSizePolicy, QWidget)
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        if not Dialog.objectName():
-            Dialog.setObjectName(u"Dialog")
-        Dialog.resize(298, 343)
-        Dialog.setStyleSheet(u"/* Style the dialog window */\n"
-"QDialog{\n"
+class Ui_Form(object):
+    def setupUi(self, Form):
+        if not Form.objectName():
+            Form.setObjectName(u"Form")
+        Form.resize(362, 452)
+        Form.setStyleSheet(u"QWidget{\n"
 "background-color: #FFFBF5; /* \u0431\u0435\u043b\u044b\u0439 \u0431\u044d\u043a\u0433\u0440\u0430\u0443\u043d\u0434 */\n"
 "}\n"
 "\n"
-"/* Style the label */\n"
 "QLabel {\n"
-"    font-size: 18px; /* larger font size */\n"
-"    font-weight: bold; /* bold font */\n"
-"    color: #333; /* dark gray text color */\n"
+"    font-size: 14px; /* size of label text */\n"
+"    font-weight: bold; /* bold label text */\n"
 "}\n"
 "\n"
-"/* Style the list widget */\n"
-"QListWidget {\n"
-"    background-color: #fff; /* white background */\n"
-"    border: 1px solid #ddd; /* thin gray border */\n"
-"    border-radius: 5px; /* rounded corners */\n"
+"QLineEdit {\n"
+"    border: 1px solid #ccc; /* light gray border for input fields */\n"
+"    border-radius: 5px; /* rounded corners for input fields */\n"
+"    padding: 5px; /* padding for input fields */\n"
 "}\n"
 "\n"
-"/* Style the list items */\n"
-"QListWidgetItem {\n"
-"    padding: 10px; /* add some padding to the list items */\n"
-"    border-bottom: 1px solid #ccc; /* thin gray border between list items */\n"
+"QPushButton {\n"
+"    border: none; /* no border for buttons */\n"
+"    border-radius: 5px; /* rounded corners for buttons */\n"
+"    padding: 10px 20px; /* padding for buttons */\n"
 "}\n"
 "\n"
-"QListWidgetItem:hover {\n"
+"QPushButton:hover {\n"
 "    background-color: #f0f0f0; /* light gray background on hover */\n"
 "}\n"
 "\n"
-"QListWidgetItem:selected {\n"
-"    background-color: #ccc; /* gray background on selection */\n"
-"    color: #333;"
-                        " /* dark gray text color on selection */\n"
+"QPushButton:pressed {\n"
+"    background-color: #d0d0d0; /* dark gray background on press */\n"
 "}")
-        self.label = QLabel(Dialog)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(60, 20, 161, 31))
-        self.label.setStyleSheet(u"QDialog{\n"
-"background-color: #FFFBF5; /* \u0431\u0435\u043b\u044b\u0439 \u0431\u044d\u043a\u0433\u0440\u0430\u0443\u043d\u0434 */\n"
-"}")
-        self.top_list = QListWidget(Dialog)
-        self.top_list.setObjectName(u"top_list")
-        self.top_list.setGeometry(QRect(30, 60, 221, 261))
+        self.input_field = QLineEdit(Form)
+        self.input_field.setObjectName(u"input_field")
+        self.input_field.setGeometry(QRect(10, 50, 341, 31))
         font = QFont()
-        font.setPointSize(10)
+        font.setPointSize(11)
         font.setBold(True)
-        self.top_list.setFont(font)
-        self.top_list.setStyleSheet(u"QListWidget {\n"
+        self.input_field.setFont(font)
+        self.current_word_list = QListWidget(Form)
+        self.current_word_list.setObjectName(u"current_word_list")
+        self.current_word_list.setGeometry(QRect(10, 90, 341, 331))
+        font1 = QFont()
+        font1.setPointSize(10)
+        font1.setBold(True)
+        self.current_word_list.setFont(font1)
+        self.current_word_list.setStyleSheet(u"QListWidget {\n"
 "    /* \u043e\u0431\u0449\u0438\u0439 \u0441\u0442\u0438\u043b\u044c \u0441\u043f\u0438\u0441\u043a\u0430 */\n"
 "    border: 1px solid #ccc;\n"
 "    border-radius: 5px;\n"
@@ -81,7 +76,6 @@ class Ui_Dialog(object):
 "QListWidget::item {\n"
 "    /* \u0441\u0442\u0438\u043b\u044c \u043e\u0442\u0434\u0435\u043b\u044c\u043d\u043e\u0433\u043e \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u0430 \u0441\u043f\u0438\u0441\u043a\u0430 */\n"
 "    padding: 10px;\n"
-"    border-bottom: 2px solid #ccc;\n"
 "}\n"
 "\n"
 "QListWidget::item:hover {\n"
@@ -105,14 +99,18 @@ class Ui_Dialog(object):
 "    color: #222;\n"
 "}\n"
 "")
+        self.label = QLabel(Form)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(20, 20, 201, 16))
 
-        self.retranslateUi(Dialog)
+        self.retranslateUi(Form)
 
-        QMetaObject.connectSlotsByName(Dialog)
+        QMetaObject.connectSlotsByName(Form)
     # setupUi
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"\u041b\u0443\u0447\u0448\u0438\u0435 \u0438\u0433\u0440\u043e\u043a\u0438", None))
+    def retranslateUi(self, Form):
+        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+        self.input_field.setText("")
+        self.label.setText(QCoreApplication.translate("Form", u"\u041f\u043e\u043f\u044b\u0442\u043a\u0438:", None))
     # retranslateUi
 
