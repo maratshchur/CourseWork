@@ -1,4 +1,4 @@
-from PyQt6.QtCore import QTimer, QSettings
+from PySide6.QtCore import QTimer, QSettings
 import requests
 
 def get_session_id():

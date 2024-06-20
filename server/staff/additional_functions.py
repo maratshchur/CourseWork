@@ -2,9 +2,10 @@ from datetime import datetime
 import os
 from game.main_functionality.word_processing import load_close_words
 from game.models import DailyWord
+from pathlib import Path
 
 
-def is_word_in_file(word, file_path=r'D:\4_SEM\CourseWork\server\game\data\all_words.txt'):
+def is_word_in_file(word, file_path=Path(__file__).parent.parent / 'game' /  'data' / 'all_words.txt'):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             words = file.read().splitlines()
@@ -18,7 +19,7 @@ def create_word(word):
         return 0
     
     try:
-        if not find_file_with_word(r"D:\4_SEM\CourseWork\server\game\game_files", word):
+        if not find_file_with_word(Path(__file__).parent.parent /  'game_files', word):
             load_close_words(word)
         return 1
     

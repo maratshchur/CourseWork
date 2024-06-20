@@ -1,15 +1,12 @@
 from datetime import datetime, timedelta
 import json
 from django.utils import timezone
-from django.utils.timezone import localtime
 
-from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from game.main_functionality.word_processing import get_word_closeness
 from tournament.models import Message, Tournament, TournamentResult, TournamentWord, TournamentWordStatistic, TournmentParticipant
-from celery import shared_task
 
 from users.models import CustomUser
 

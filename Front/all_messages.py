@@ -1,6 +1,6 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QVBoxLayout, QTextBrowser, QListWidget, QListWidgetItem, QDialog
-from PyQt6.QtCore import Qt
+from PySide6.QtWidgets import QApplication, QVBoxLayout, QTextBrowser, QListWidget, QListWidgetItem, QDialog
+from PySide6.QtCore import Qt
 import requests
 import datetime
 

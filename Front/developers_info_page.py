@@ -1,7 +1,5 @@
 from PySide6.QtWidgets import QApplication, QDialog, QLineEdit,  QLabel, QPushButton, QVBoxLayout, QWidget, QMessageBox
 import sys
-import requests
-import json
 from email_verification import VerifyEmailPage
 from urls import BASE_URL
 from UI.ui_developers_info_dialog import Ui_Dialog

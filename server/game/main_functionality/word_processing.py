@@ -3,7 +3,7 @@ from gensim.models import KeyedVectors
 from math import ceil
 import json
 import functools
-
+from pathlib import Path
 from .paths import ALL_WORDS_FILE, MODEL_FILE, GAME_FILES
 
 
@@ -23,7 +23,7 @@ def get_new_word():
 
     """
     random_word = None
-    with open(ALL_WORDS_FILE, "r", encoding="utf-8") as f:
+    with open(Path(__file__).parent.parent.parent / 'game' /  'data' / 'all_words.txt', "r", encoding="utf-8") as f:
         for line in f:
             if random.random() < 1e-3:  # Probability of selecting the line
                 random_word = line.split()[0].strip()
@@ -47,8 +47,8 @@ def load_close_words(word):
 
     :param word: The word for which to load and save close words.
     """
-    model = KeyedVectors.load_word2vec_format(MODEL_FILE, binary=False)
-    with open(f"{GAME_FILES}\\close_words_{word}.json", "w", encoding="utf-8") as f:
+    model = KeyedVectors.load_word2vec_format(Path(__file__).parent.parent.parent / 'game' /  'data' / 'model.txt', binary=False)
+    with open(Path(__file__).parent.parent.parent / 'game_files' / f'close_words_{word}.json', "w", encoding="utf-8") as f:
         result = model.most_similar(positive=[word], topn=35519)
         result = {item[0]: index for index, item in enumerate(result)}
         json.dump(result, f, indent=4, ensure_ascii=False)        
@@ -63,7 +63,7 @@ def get_word_closeness(user_input, word_to_guess):
     :param word_to_guess: The word to guess.
     :return: The closeness value of the user's input word.
     """
-    with open(f"{GAME_FILES}/close_words_{word_to_guess}.json", "r", encoding="utf-8") as f:
+    with open(Path(__file__).parent.parent.parent /  'game_files' / f'close_words_{word_to_guess}.json', "r", encoding="utf-8") as f:
         data = json.load(f)
         number = data[user_input]
         return number + 2
@@ -77,7 +77,7 @@ def get_hint(closest_word_guessed_number, word_to_guess):
     :param word_to_guess: The word to guess.
     :return: A hint word and the hint closeness.
     """
-    with open(f"{GAME_FILES}/close_words_{word_to_guess}.json", "r", encoding="utf-8") as f:
+    with open(Path(__file__).parent.parent.parent /  'game_files' / f'close_words_{word_to_guess}.json', "r", encoding="utf-8") as f:
         data = json.load(f)
         print("Word guessed =", closest_word_guessed_number)
         hint_closeness = ceil(closest_word_guessed_number * 0.6)
