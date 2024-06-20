@@ -10,13 +10,13 @@
 ![Главный экран](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2023-10-30_17-20-32.jpg)
 
 ### Экран авторизации
-![Экран авторизации](Screenshots\photo_2024-06-20_18-29-29.jpg)
+![Экран авторизации](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2024-06-20_18-29-29.jpg)
 
 ### Экран создания турниров
-![Экран создания турнира](Screenshots\photo_2024-06-20_18-29-29.jpg)
+![Экран создания турнира](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2024-06-20_18-29-39.jpg)
 
 ### Экран турнира
-![Экран турнира](Screenshots\photo_2024-06-20_18-29-42.jpg)
+![Экран турнира](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2024-06-20_18-29-42.jpg)
 
 ## Функциональные возможности
 
@@ -55,7 +55,7 @@
     pip install -r requirements.txt
     ```
 
-4. Запустите приложение:
+4. Запустите сервер:
     ```sh
     python manage.py runserver
     ```
