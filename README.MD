@@ -1,77 +1,80 @@
-# Интеллектуальная игра на основе машинного обучения
+# Machine Learning-Based Intellectual Game
 
-## Описание проекта
+## Project Description
 
-Данный проект представляет собой десктопное приложение — интеллектуальную игру, в которой пользователь должен угадать загаданное игрой слово. Игра использует алгоритмы машинного обучения для предоставления подсказок и оценки схожести вводимых слов.
+This project is a desktop application — an intellectual game where the user must guess the word chosen by the game. The game uses machine learning algorithms to provide hints and evaluate the similarity of the input words.
 
-## Скриншоты
+## Screenshots
 
-### Главный экран
-![Главный экран](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2023-10-30_17-20-32.jpg)
+### Main Screen
+![Main Screen](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2023-10-30_17-20-32.jpg)
 
-### Экран авторизации
-![Экран авторизации](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2024-06-20_18-29-29.jpg)
+### Authorization Screen
+![Authorization Screen](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2024-06-20_18-29-29.jpg)
 
-### Экран создания турниров
-![Экран создания турнира](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2024-06-20_18-29-39.jpg)
+### Tournament Creation Screen
+![Tournament Creation Screen](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2024-06-20_18-29-39.jpg)
 
-### Экран турнира
-![Экран турнира](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2024-06-20_18-29-42.jpg)
+### Tournament Screen
+![Tournament Screen](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2024-06-20_18-29-42.jpg)
 
-## Функциональные возможности
+## Features
 
-### Для администратора
+### For Administrator
 
-- **Создание слова**: Администратор может задать новое загаданное слово.
-- **Создание турнира**: Администратор может создать новый турнир.
+- **Word Creation**: The administrator can set a new word to be guessed.
+- **Tournament Creation**: The administrator can create a new tournament.
 
-### Для пользователя
+### For User
 
-- **Регистрация**: Пользователь может зарегистрироваться, введя электронную почту и пароль.
-- **Авторизация**: Пользователь может авторизоваться, введя логин и пароль.
-- **Попытка угадать слово**: Пользователь вводит слово и получает оценку его схожести с загаданным.
-- **Подсказка**: Пользователь может получить подсказку — слово, ближе по смыслу к загаданному.
-- **Просмотр профиля**: Пользователь видит своё имя, количество побед и рейтинг.
-- **Просмотр лучших игроков**: Список лучших игроков, ранжированных по рейтингу.
-- **Просмотр сообщений**: Пользователь может видеть сообщения о результатах турниров.
-- **Просмотр доступных турниров**: Список доступных турниров для участия.
-- **Просмотр деталей турнира**: Основные детали выбранного турнира (название, описание, длительность, дата начала, количество раундов).
-- **Участие в турнире**: Возможность принять участие в турнире.
+- **Registration**: Users can register by entering their email and password.
+- **Authorization**: Users can log in by entering their username and password.
+- **Word Guessing**: Users input a word and receive an evaluation of its similarity to the target word.
+- **Hint**: Users can receive a hint — a word closer in meaning to the target word.
+- **Profile View**: Users can view their name, number of wins, and rating.
+- **Top Players View**: A list of top players ranked by rating.
+- **Messages View**: Users can see messages about tournament results.
+- **Available Tournaments View**: A list of available tournaments for participation.
+- **Tournament Details View**: Basic details of the selected tournament (name, description, duration, start date, number of rounds).
+- **Tournament Participation**: The ability to participate in a tournament.
 
-## Установка и запуск
+## Installation and Setup
 
-1. Клонируйте репозиторий:
+1. Clone the repository:
     ```sh
-    git clone https://github.com/maratshchur/CourseWork.git
+    git clone https://github.com/maratshchur/LogicOn.git
     ```
 
-2. Перейдите в директорию ceрвера:
+2. Navigate to the server directory:
     ```sh
     cd server
     ```
 
-3. Установите необходимые зависимости:
+3. Install the required dependencies:
     ```sh
     pip install -r requirements.txt
     ```
 
-4. Запустите сервер:
+4. Start the server:
     ```sh
     python manage.py runserver
     ```
-5. Для запуска игры необходимо запустить файл start_page из папки Application корневой директории проекта
- 
 
-## Используемые технологии
+5. To start the game, run the `start_page` file from the `Application` folder in the root directory of the project:
+    ```sh
+    python Application/start_page.py
+    ```
 
-- **Язык программирования**: Python
-- **GUI-библиотека**: PyQt6
-- **База данных**: SQLite
+## Technologies Used
 
-## Вклад
+- **Programming Language**: Python
+- **GUI Library**: PyQt6
+- **Database**: SQLite
 
-Мы приветствуем вклад в развитие проекта! Пожалуйста, создайте Pull Request или откройте Issue для обсуждения.
+## Contribution
 
-## Контакты
+We welcome contributions to the project! Please create a Pull Request or open an Issue for discussion.
 
-Если у вас есть вопросы или предложения, пожалуйста, свяжитесь с нами по адресу: [marat.shchur@gmail.com](marat.shchur@gmail.com).
+## Contact
+
+If you have any questions or suggestions, please contact us at [marat.shchur@gmail.com](mailto:marat.shchur@gmail.com).
