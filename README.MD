@@ -7,7 +7,7 @@
 ## Скриншоты
 
 ### Главный экран
-![Главный экран](Screenshots\photo_2023-10-30_17-20-32.jpg)
+![Главный экран](https://github.com/maratshchur/CourseWork/blob/MyMain/Screenshots/photo_2023-10-30_17-20-32.jpg)
 
 ### Экран авторизации
 ![Экран авторизации](Screenshots\photo_2024-06-20_18-29-29.jpg)
